@@ -14,6 +14,7 @@ class PhotoAlbumViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var newCollectionButton: UIBarButtonItem!
+    @IBOutlet weak var loadingImages: UIActivityIndicatorView!
     
     var fetchedResultsController: NSFetchedResultsController<Photo>!
     var dataController:DataController!
@@ -37,7 +38,14 @@ class PhotoAlbumViewController: UIViewController {
     }
     
     func loadImageFromFlickr() {
+        collectionView.isHidden = true
+        loadingImages.isHidden = false
+        loadingImages.startAnimating()
+        
         guard (fetchedResultsController.fetchedObjects?.isEmpty)! else {
+            loadingImages.isHidden = true
+            collectionView.isHidden = false
+            loadingImages.stopAnimating()
             return
         }
         
@@ -48,6 +56,10 @@ class PhotoAlbumViewController: UIViewController {
                 
                 if photos.count > 0 {
                     DispatchQueue.main.async {
+                        self.collectionView.isHidden = false
+                        self.loadingImages.isHidden = true
+                        self.loadingImages.stopAnimating()
+                        
                         if (pagesCount == 0) {
                             pin.pages = Int32(Int(totalPages))
                         }
@@ -106,8 +118,6 @@ class PhotoAlbumViewController: UIViewController {
                                                               managedObjectContext: dataController.viewContext,
                                                               sectionNameKeyPath: nil, cacheName: "photo")
         fetchedResultsController.delegate = self
-        print(fetchedResultsController.cacheName!)
-        print(fetchedResultsController.fetchedObjects?.count ?? 0)
         
         do {
             try fetchedResultsController.performFetch()

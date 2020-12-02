@@ -12,7 +12,7 @@ class Client {
     static let apiKey = "459f2357651203fd82c366f06dfbf383"
     static let keySecret = "2a3d6012523e298f"
     static let photosPerPage = 10
-    static let flickrLimit = 100
+    static let flickrLimit = 4000
 
     enum Endpoints {
         static let base = "https://www.flickr.com/services/rest/?method="
@@ -29,7 +29,7 @@ class Client {
                          "&lon=\(longitude)" +
                          "&radius=\(Endpoints.radius)" +
                          "&per_page=\(perPage)" +
-                         "&page=\(1)" +
+                         "&page=\(pageNum)" +
                          "&format=json&nojsoncallback=1&extras=url_m"
             }
         }
@@ -64,13 +64,12 @@ class Client {
         return task
     }
     
-    class func getPhotos(latitude: Double, longitude: Double, totalPageAmount:  Int = 5, completion: @escaping ([PhotoStruct], Int, Error?) -> Void) -> Void {
-        
-        let numberPages = min(totalPageAmount, Client.flickrLimit) / Client.photosPerPage
-        let randomPageNum = Int.random(in: 0...numberPages)
+    class func getPhotos(latitude: Double, longitude: Double, totalPageAmount:  Int = 20, completion: @escaping ([PhotoStruct], Int, Error?) -> Void) -> Void {
+
+        let numberPages = min(totalPageAmount == 0 ? 20 : totalPageAmount, self.flickrLimit/self.photosPerPage)
+        let randomPageNum = Int(arc4random_uniform(UInt32(numberPages)) + 1)
         let searchPhotos = Endpoints.searchPhotos(latitude, longitude, numberPages, randomPageNum).url
 
-        print(searchPhotos)
         let _ = taskForGETRequest(url: searchPhotos, responseType: SearchPhotoResponse.self) { response, error in
                if let response = response {
                 completion(response.photos.photo, response.photos.pages, nil)

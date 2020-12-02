@@ -120,15 +120,21 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SgZ-7E-XQ1">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                 </imageView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hW3-tV-skV">
+                                                    <rect key="frame" x="54" y="54" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="SgZ-7E-XQ1" firstAttribute="leading" secondItem="Shc-4h-TYE" secondAttribute="leading" id="1Ip-Ie-Q9S"/>
                                                 <constraint firstAttribute="trailing" secondItem="SgZ-7E-XQ1" secondAttribute="trailing" id="GOC-Oc-fWq"/>
                                                 <constraint firstItem="SgZ-7E-XQ1" firstAttribute="top" secondItem="Shc-4h-TYE" secondAttribute="top" id="Wcm-XM-Slm"/>
+                                                <constraint firstItem="hW3-tV-skV" firstAttribute="centerX" secondItem="Shc-4h-TYE" secondAttribute="centerX" id="cwj-dR-179"/>
                                                 <constraint firstAttribute="bottom" secondItem="SgZ-7E-XQ1" secondAttribute="bottom" id="dJa-M2-GzM"/>
+                                                <constraint firstItem="hW3-tV-skV" firstAttribute="centerY" secondItem="Shc-4h-TYE" secondAttribute="centerY" id="rfu-82-4Se"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
+                                            <outlet property="downloadImage" destination="hW3-tV-skV" id="53G-2j-soK"/>
                                             <outlet property="photoImageView" destination="SgZ-7E-XQ1" id="b2W-vT-ma5"/>
                                         </connections>
                                     </collectionViewCell>
@@ -138,17 +144,22 @@
                                     <outlet property="delegate" destination="kld-TE-CBy" id="6zT-bV-naB"/>
                                 </connections>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="NUY-ul-omc">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tLi-Hl-fla"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="y7g-ce-MfB" firstAttribute="trailing" secondItem="xqL-hv-gFA" secondAttribute="trailing" id="1Fw-z5-Vut"/>
+                            <constraint firstItem="NUY-ul-omc" firstAttribute="centerX" secondItem="cze-Oc-meX" secondAttribute="centerX" id="6p2-3i-u0b"/>
                             <constraint firstItem="y7g-ce-MfB" firstAttribute="trailing" secondItem="tLi-Hl-fla" secondAttribute="trailing" id="C8f-PL-T6V"/>
                             <constraint firstItem="y7g-ce-MfB" firstAttribute="leading" secondItem="xqL-hv-gFA" secondAttribute="leading" id="GdR-cF-O1B"/>
                             <constraint firstItem="EHF-LW-VEj" firstAttribute="top" secondItem="y7g-ce-MfB" secondAttribute="bottom" constant="8" symbolic="YES" id="NYr-2w-WKQ"/>
                             <constraint firstItem="xqL-hv-gFA" firstAttribute="top" secondItem="EHF-LW-VEj" secondAttribute="bottom" id="Wwz-G4-MJS"/>
                             <constraint firstItem="y7g-ce-MfB" firstAttribute="leading" secondItem="tLi-Hl-fla" secondAttribute="leading" id="ae8-6w-u6P"/>
                             <constraint firstItem="y7g-ce-MfB" firstAttribute="top" secondItem="tLi-Hl-fla" secondAttribute="top" id="iXi-Vg-Ohr"/>
+                            <constraint firstItem="NUY-ul-omc" firstAttribute="centerY" secondItem="cze-Oc-meX" secondAttribute="centerY" id="izo-uD-P44"/>
                             <constraint firstItem="xqL-hv-gFA" firstAttribute="bottom" secondItem="tLi-Hl-fla" secondAttribute="bottom" id="lUf-RX-Cq7"/>
                             <constraint firstItem="EHF-LW-VEj" firstAttribute="leading" secondItem="tLi-Hl-fla" secondAttribute="leading" id="mMW-2w-XFK"/>
                             <constraint firstItem="EHF-LW-VEj" firstAttribute="trailing" secondItem="tLi-Hl-fla" secondAttribute="trailing" id="n9B-ko-ZE9"/>
@@ -159,6 +170,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="EHF-LW-VEj" id="xPf-p3-ISO"/>
+                        <outlet property="loadingImages" destination="NUY-ul-omc" id="9tr-ru-xtU"/>
                         <outlet property="mapView" destination="y7g-ce-MfB" id="AiO-NM-Tb4"/>
                         <outlet property="newCollectionButton" destination="Ubb-fX-r8F" id="18K-LD-itR"/>
                     </connections>
