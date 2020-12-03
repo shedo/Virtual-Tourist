@@ -60,9 +60,7 @@ class PhotoAlbumViewController: UIViewController {
                         self.loadingImages.isHidden = true
                         self.loadingImages.stopAnimating()
                         
-                        if (pagesCount == 0) {
-                            pin.pages = Int32(Int(totalPages))
-                        }
+                        pin.pages = Int32(Int(totalPages))
                         for photo in photos {
                             let newPhoto = Photo(context: self.dataController.viewContext)
                             newPhoto.imageUrl = URL(string: photo.url_m)
@@ -83,13 +81,14 @@ class PhotoAlbumViewController: UIViewController {
     }
     
     @IBAction func newCollection(_ sender: Any) {
-        guard let imageObject = fetchedResultsController.fetchedObjects else { return }
-        for image in imageObject {
-            dataController.viewContext.delete(image)
-            do {
-                try dataController.viewContext.save()
-            } catch {
-                print("Unable to delete images")
+        if let photos = fetchedResultsController.fetchedObjects {
+            for photo in photos {
+                dataController.viewContext.delete(photo)
+                do {
+                    try dataController.viewContext.save()
+                } catch {
+                    print("Unable to delete images")
+                }
             }
         }
         loadImageFromFlickr()

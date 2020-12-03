@@ -26,17 +26,19 @@ extension PhotoAlbumViewController : UICollectionViewDelegate, UICollectionViewD
         if photoData.imageData == nil {
             newCollectionButton.isEnabled = false
             DispatchQueue.global(qos: .background).async {
-                if let imageData = try? Data(contentsOf: photoData.imageUrl!) {
-                    DispatchQueue.main.async {
-                        photoData.imageData = imageData
-                        do {
-                            try self.dataController.viewContext.save()
-                        } catch {
-                            print("Error during saving image")
+                if let imageUrl = photoData.imageUrl {
+                    if let imageData = try? Data(contentsOf: imageUrl) {
+                        DispatchQueue.main.async {
+                            photoData.imageData = imageData
+                            do {
+                                try self.dataController.viewContext.save()
+                            } catch {
+                                print("Error during saving image")
+                            }
+                            
+                            let image = UIImage(data: imageData)!
+                            cell.setPhotoImageView(imageView: image, sizeFit: true)
                         }
-                        
-                        let image = UIImage(data: imageData)!
-                        cell.setPhotoImageView(imageView: image, sizeFit: true)
                     }
                 }
             }
